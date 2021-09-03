@@ -1,6 +1,7 @@
 package com.cartoonishvillain.cartoonishweaponpack;
 
 import com.cartoonishvillain.cartoonishweaponpack.items.ComicallyLargeSpoon;
+import com.cartoonishvillain.cartoonishweaponpack.items.LargeChickenLeg;
 import com.cartoonishvillain.cartoonishweaponpack.items.SurfBoard;
 import com.cartoonishvillain.cartoonishweaponpack.items.WeaponMaterials;
 import net.minecraft.entity.EntityType;
@@ -20,6 +21,7 @@ public class Register {
     }
 
     public static final RegistryObject<Item> COMICALLYLARGESPOON = ITEMS.register("comicallylargespoon", ()->new ComicallyLargeSpoon(WeaponMaterials.SPOON, 7, -3.2f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static final RegistryObject<Item> SURFBOARD = ITEMS.register("surfboard", ()->new SurfBoard(new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
+    public static final RegistryObject<Item> SURFBOARD = ITEMS.register("surfboard", ()->new SurfBoard(new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
+    public static final RegistryObject<Item> LARGECHICKENLEG = ITEMS.register("largechickenleg", ()->new LargeChickenLeg(WeaponMaterials.MEAT, 5, -3.4f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
 
 }

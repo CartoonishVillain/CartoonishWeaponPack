@@ -1,7 +1,9 @@
 package com.cartoonishvillain.cartoonishweaponpack;
 
+import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -37,13 +39,14 @@ public class CartoonishWeaponPack
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 
+
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void setup(final FMLCommonSetupEvent event)
     {
-
+        PlayerCapability.register();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

@@ -1,8 +1,11 @@
 package com.cartoonishvillain.cartoonishweaponpack.items;
 
+import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShovelItem;
@@ -34,10 +37,17 @@ public class ComicallyLargeSpoon extends ShovelItem {
 
         //for every 4 health difference, a 1 percent modifier is added to the panic chance.
         panicChance += ((attacker.getHealth() - target.getHealth())/4);
-
-        if(attacker.getRandom().nextInt(100) < panicChance){
-            target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 5 * 20, 5));
+        
+        if(attacker instanceof PlayerEntity){
+            int finalPanicChance = panicChance;
+            attacker.getCapability(PlayerCapability.INSTANCE).ifPresent(h->{
+                float check = h.getCooldownValue();
+                if(attacker.getRandom().nextInt(finalPanicChance - 1) < finalPanicChance &&  check == 1){
+                    target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 5* 20, 5));
+                }
+            });
         }
+
 
         return super.hurtEnemy(stack, target, attacker);
     }

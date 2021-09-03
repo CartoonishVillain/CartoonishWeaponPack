@@ -37,12 +37,13 @@ public class ComicallyLargeSpoon extends ShovelItem {
 
         //for every 4 health difference, a 1 percent modifier is added to the panic chance.
         panicChance += ((attacker.getHealth() - target.getHealth())/4);
-        
+
+        //only allow players w/ a full swing meter to panic
         if(attacker instanceof PlayerEntity){
             int finalPanicChance = panicChance;
             attacker.getCapability(PlayerCapability.INSTANCE).ifPresent(h->{
                 float check = h.getCooldownValue();
-                if(attacker.getRandom().nextInt(finalPanicChance - 1) < finalPanicChance &&  check == 1){
+                if(attacker.getRandom().nextInt(100) < finalPanicChance &&  check == 1){
                     target.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 5* 20, 5));
                 }
             });

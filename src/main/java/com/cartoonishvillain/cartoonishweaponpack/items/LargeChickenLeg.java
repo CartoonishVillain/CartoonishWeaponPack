@@ -1,25 +1,24 @@
 package com.cartoonishvillain.cartoonishweaponpack.items;
 
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
+import com.google.common.collect.ImmutableSet;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SwordItem;
+import net.minecraft.item.*;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.vector.Vector3d;
 
+import javax.tools.Tool;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class LargeChickenLeg extends SwordItem {
-    public LargeChickenLeg(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builderIn) {
-        super(tier, attackDamageIn, attackSpeedIn, builderIn);
+public class LargeChickenLeg extends ToolItem {
+    public LargeChickenLeg(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builderIn) {
+        super((float)attackDamageIn, attackSpeedIn, tier, ImmutableSet.of(), builderIn);
     }
 
 

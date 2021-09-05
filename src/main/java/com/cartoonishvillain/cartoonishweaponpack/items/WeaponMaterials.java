@@ -9,7 +9,8 @@ import java.util.function.Supplier;
 public enum WeaponMaterials implements IItemTier {
 
     SPOON(1, 196, 2.5f, 0, 8, () ->{return  Ingredient.of(Items.IRON_INGOT);}),
-    MEAT(1, 128, 1.2f, 0, 16, () ->{return  Ingredient.of(Items.COOKED_CHICKEN);});
+    MEAT(-1, 128, 1.2f, 0, 16, () ->{return  Ingredient.of(Items.COOKED_CHICKEN);}),
+    GLOVE(-1, 512, 1.2f, 0, 8, () -> {return Ingredient.of(Items.RED_WOOL);});
 
 
     private final int harvestLevel;

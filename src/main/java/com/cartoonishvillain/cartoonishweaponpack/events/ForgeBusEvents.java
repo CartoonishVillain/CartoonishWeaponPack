@@ -22,6 +22,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.Random;
 
 
 @Mod.EventBusSubscriber(modid = CartoonishWeaponPack.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -60,6 +61,20 @@ public class ForgeBusEvents {
                 // 10% chance for damage block
                 if(player.getRandom().nextInt(100) < chance && valid_damage(event.getSource())){
                     board.hurtAndBreak((int) event.getAmount(), player, (p_220040_1_) -> {
+                        p_220040_1_.broadcastBreakEvent(hand);
+                    });
+                    event.setCanceled(true);
+                }
+            } else if(player.getItemInHand(Hand.MAIN_HAND).getItem().equals(Register.BOXINGGLOVES.get()) && player.getItemInHand(Hand.OFF_HAND).getItem().equals(Register.BOXINGGLOVES.get())){
+                int chance = 5;
+                ItemStack damagedglove;
+                Hand hand;
+                //Choose which glove blocked the attack
+                if(new Random().nextInt(2) == 0) {damagedglove = player.getItemInHand(Hand.MAIN_HAND); hand = Hand.MAIN_HAND;}
+                else {damagedglove = player.getItemInHand(Hand.OFF_HAND); hand = Hand.OFF_HAND;}
+                // 5% chance for damage block
+                if(player.getRandom().nextInt(100) < chance && valid_damage(event.getSource())){
+                    damagedglove.hurtAndBreak((int) event.getAmount()*2, player, (p_220040_1_) -> {
                         p_220040_1_.broadcastBreakEvent(hand);
                     });
                     event.setCanceled(true);

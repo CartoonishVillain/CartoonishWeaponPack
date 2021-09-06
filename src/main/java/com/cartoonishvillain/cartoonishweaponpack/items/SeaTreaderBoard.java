@@ -15,10 +15,10 @@ import net.minecraft.world.World;
 
 import java.util.Map;
 
-public class SurfBoard extends Item {
+public class SeaTreaderBoard extends Item {
 
 
-    public SurfBoard(Properties p_i48470_1_) {
+    public SeaTreaderBoard(Properties p_i48470_1_) {
         super(p_i48470_1_);
     }
 
@@ -30,6 +30,11 @@ public class SurfBoard extends Item {
     @Override
     public boolean isDamageable(ItemStack stack) {
         return true;
+    }
+
+    @Override
+    public int getItemStackLimit(ItemStack stack) {
+        return 1;
     }
 
     @Override

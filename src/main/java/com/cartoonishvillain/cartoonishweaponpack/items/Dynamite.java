@@ -20,7 +20,7 @@ public class Dynamite extends Item {
     public ActionResult<ItemStack> use(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
         if(p_77659_2_.isHolding(Items.FLINT_AND_STEEL)){
             ThrownDynamite thrownDynamite = new ThrownDynamite(Register.THROWNDYNAMITE.get(), p_77659_1_);
-            thrownDynamite.shootFromRotation(p_77659_2_, p_77659_2_.xRot, p_77659_2_.yRot, 0.0f, 1.5f, 1.0f);
+            thrownDynamite.shootFromRotation(p_77659_2_, p_77659_2_.xRot, p_77659_2_.yRot, 0.0f, 1.2f, 1.0f);
             thrownDynamite.setPos(p_77659_2_.getX(), p_77659_2_.getY()+1, p_77659_2_.getZ());
             p_77659_1_.addFreshEntity(thrownDynamite);
             p_77659_2_.getCooldowns().addCooldown(this, 30);

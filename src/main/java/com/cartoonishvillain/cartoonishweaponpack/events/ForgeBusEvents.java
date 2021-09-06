@@ -120,7 +120,7 @@ public class ForgeBusEvents {
                 tntEntity.playSound(SoundEvents.TNT_PRIMED, 1.0f, 1.0f);
                 snowballEntity.remove(false);
 
-                event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 30);
+                event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 60);
                 event.getItemStack().shrink(1);
 
                 if(offhand.getItem().equals(Items.FIRE_CHARGE)){offhand.shrink(1);}

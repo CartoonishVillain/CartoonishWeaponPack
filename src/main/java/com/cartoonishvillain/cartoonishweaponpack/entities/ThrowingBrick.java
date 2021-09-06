@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -48,13 +49,17 @@ public class ThrowingBrick extends ProjectileItemEntity {
     protected void onHit(RayTraceResult p_70227_1_) {
         super.onHit(p_70227_1_);
         int chance = 60;
+        boolean breakBrick = true;
         if(this.random.nextInt(100) < chance){
             ItemEntity itemEntity = new ItemEntity(EntityType.ITEM, this.level);
             itemEntity.setPos(p_70227_1_.getLocation().x(), p_70227_1_.getLocation().y(), p_70227_1_.getLocation().z());
             itemEntity.setItem(new ItemStack(Items.BRICK, 1));
             this.level.addFreshEntity(itemEntity);
+            breakBrick = false;
         }
 
+        this.playSound(SoundEvents.STONE_HIT, 1.0F, 1.0F);
+        if(breakBrick){this.playSound(SoundEvents.STONE_BREAK, 1.0f, 1.0f);}
         this.remove(false);
     }
 

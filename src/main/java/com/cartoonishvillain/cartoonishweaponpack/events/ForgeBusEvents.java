@@ -7,26 +7,38 @@ import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapabilityM
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingBrick;
 import com.cartoonishvillain.cartoonishweaponpack.items.SurfBoard;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.ProjectileItemEntity;
+import net.minecraft.entity.projectile.SmallFireballEntity;
+import net.minecraft.entity.projectile.SnowballEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
 @Mod.EventBusSubscriber(modid = CartoonishWeaponPack.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ForgeBusEvents {
+    private static ArrayList<Entity> trackedEntities = new ArrayList<>();
 
     @SubscribeEvent
     public static void playerRegister(AttachCapabilitiesEvent<Entity> event){
@@ -85,13 +97,72 @@ public class ForgeBusEvents {
 
     @SubscribeEvent
     public static void PlayerClickVanillaEvent(PlayerInteractEvent.RightClickItem event){
-        if(event.getItemStack().getItem().equals(Items.BRICK) && !event.getPlayer().level.isClientSide()){
-            ThrowingBrick throwingBrick = new ThrowingBrick(Register.THROWINGBRICK.get(), event.getWorld(), event.getPlayer());
-            throwingBrick.setItem(new ItemStack(Items.BRICK, 1));
-            throwingBrick.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0.0f, 1.5f, 1.0f);
-            event.getWorld().addFreshEntity(throwingBrick);
-            event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 30);
-            event.getItemStack().shrink(1);
+        if(!event.getPlayer().level.isClientSide()){
+            ItemStack offhand = event.getPlayer().getItemInHand(Hand.OFF_HAND);
+            if(event.getItemStack().getItem().equals(Items.BRICK)) {
+                ThrowingBrick throwingBrick = new ThrowingBrick(Register.THROWINGBRICK.get(), event.getWorld(), event.getPlayer());
+                throwingBrick.setItem(new ItemStack(Items.BRICK, 1));
+                throwingBrick.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0.0f, 1.5f, 1.0f);
+                event.getWorld().addFreshEntity(throwingBrick);
+                event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 30);
+                event.getItemStack().shrink(1);
+            }
+            else if (event.getItemStack().getItem().equals(Items.TNT) && (offhand.getItem().equals(Items.FLINT_AND_STEEL) || offhand.getItem().equals(Items.FIRE_CHARGE))){
+                SnowballEntity snowballEntity = new SnowballEntity(EntityType.SNOWBALL, event.getWorld());
+                snowballEntity.setPos(event.getPlayer().getX(), event.getPlayer().getY()+2, event.getPlayer().getZ());
+                snowballEntity.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0.0f, 0.6f, 1.0f);
+                snowballEntity.setInvisible(true);
+                TNTEntity tntEntity = new TNTEntity(EntityType.TNT, event.getWorld());
+                event.getWorld().addFreshEntity(snowballEntity);
+                tntEntity.setPos(snowballEntity.getX(), snowballEntity.getY(), snowballEntity.getZ());
+                tntEntity.setDeltaMovement(snowballEntity.getDeltaMovement());
+                event.getWorld().addFreshEntity(tntEntity);
+                tntEntity.playSound(SoundEvents.TNT_PRIMED, 1.0f, 1.0f);
+                snowballEntity.remove(false);
+
+                event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 30);
+                event.getItemStack().shrink(1);
+
+                if(offhand.getItem().equals(Items.FIRE_CHARGE)){offhand.shrink(1);}
+                else {
+                    offhand.hurtAndBreak(1, event.getPlayer(), (p_220040_1_) -> {
+                        p_220040_1_.broadcastBreakEvent(Hand.OFF_HAND);
+                    });
+                }
+            } else if(event.getItemStack().getItem().equals(Items.FIRE_CHARGE) && event.getHand() == Hand.MAIN_HAND){
+                SmallFireballEntity smallFireballEntity = new SmallFireballEntity(EntityType.SMALL_FIREBALL, event.getWorld());
+                smallFireballEntity.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0.0f, 5f, 1.0f);
+                smallFireballEntity.setPos(event.getPlayer().getX(), event.getPlayer().getY()+1, event.getPlayer().getZ());
+                event.getWorld().addFreshEntity(smallFireballEntity);
+                event.getItemStack().shrink(1);
+                event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 30);
+                if(event.getPlayer().getRandom().nextInt(4) == 0){
+                event.getPlayer().setSecondsOnFire(3);}
+                trackedEntities.add(smallFireballEntity);
+                smallFireballEntity.playSound(SoundEvents.BLAZE_SHOOT, 1, 1);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void fireballTick(TickEvent.WorldTickEvent event){
+        ArrayList<Entity> entitiesToRemove = new ArrayList<>();
+        for(Entity entity : trackedEntities){
+            if ((entity.getDeltaMovement().x < 1 && entity.getDeltaMovement().x > -1) && (entity.getDeltaMovement().z < 1 && entity.getDeltaMovement().z > -1)){
+                entitiesToRemove.add(entity);
+            }
+        }
+        for(Entity entity : entitiesToRemove){
+            trackedEntities.remove(entity);
+            entity.remove(true);
+        }
+
+    }
+
+    @SubscribeEvent
+    public static void fireballCancel(FMLServerStoppingEvent event){
+        for(Entity entity : trackedEntities){
+            entity.remove(false);
         }
     }
 

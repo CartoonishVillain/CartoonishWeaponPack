@@ -37,7 +37,9 @@ public class ThrownDynamite extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult p_70227_1_) {
         super.onHit(p_70227_1_);
-        this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.BlockInteraction.BREAK);
+        if(!this.level.isClientSide()) {
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.BlockInteraction.BREAK);
+        }
         this.remove(RemovalReason.DISCARDED);
     }
 

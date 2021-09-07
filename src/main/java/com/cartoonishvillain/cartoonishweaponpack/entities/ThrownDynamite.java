@@ -48,7 +48,8 @@ public class ThrownDynamite extends ThrowableItemProjectile {
         super.tick();
         ticksAlive--;
         if(ticksAlive < 0){
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.BlockInteraction.BREAK);
+            if(!this.level.isClientSide()){
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.BlockInteraction.BREAK);}
             this.remove(RemovalReason.DISCARDED);
         }
     }

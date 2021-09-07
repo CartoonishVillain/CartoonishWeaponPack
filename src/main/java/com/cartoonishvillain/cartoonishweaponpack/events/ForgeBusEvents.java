@@ -63,7 +63,7 @@ public class ForgeBusEvents {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             //check if the player is even holding a surf board
             if(player.isHolding(Register.SEATREADERBOARD.get())){
-                int chance = 10;
+                int chance = 15;
                 ItemStack board;
                 Hand hand;
                 if(player.getItemInHand(Hand.MAIN_HAND).getItem().equals(Register.SEATREADERBOARD.get())) {board = player.getItemInHand(Hand.MAIN_HAND); hand = Hand.MAIN_HAND;}
@@ -76,7 +76,7 @@ public class ForgeBusEvents {
                     event.setCanceled(true);
                 }
             } else if(player.getItemInHand(Hand.MAIN_HAND).getItem().equals(Register.BOXINGGLOVES.get()) && player.getItemInHand(Hand.OFF_HAND).getItem().equals(Register.BOXINGGLOVES.get())){
-                int chance = 15;
+                int chance = 25;
                 ItemStack damagedglove;
                 Hand hand;
                 //Choose which glove blocked the attack

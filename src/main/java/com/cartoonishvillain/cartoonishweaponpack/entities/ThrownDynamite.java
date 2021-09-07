@@ -43,7 +43,8 @@ public class ThrownDynamite extends ProjectileItemEntity {
     @Override
     protected void onHit(RayTraceResult p_70227_1_) {
         super.onHit(p_70227_1_);
-        this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.Mode.BREAK);
+        if(!this.level.isClientSide()){
+        this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.Mode.BREAK);}
         this.remove(false);
     }
 
@@ -52,7 +53,8 @@ public class ThrownDynamite extends ProjectileItemEntity {
         super.tick();
         ticksAlive--;
         if(ticksAlive < 0){
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.Mode.BREAK);
+            if(!this.level.isClientSide()){
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.Mode.BREAK);}
             this.remove(false);
         }
     }

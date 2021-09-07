@@ -40,7 +40,7 @@ public class ThrowingNetherBrick extends ProjectileItemEntity {
         if(p_213868_1_.getEntity() instanceof LivingEntity){
             LivingEntity livingEntity = (LivingEntity) p_213868_1_.getEntity();
             int armor = livingEntity.getArmorValue();
-            float damage = 2 + (0.15f * armor);
+            float damage = 2 + (0.1f * armor);
             livingEntity.hurt(DamageSource.GENERIC, damage);
         }
     }
@@ -50,7 +50,7 @@ public class ThrowingNetherBrick extends ProjectileItemEntity {
         super.onHit(p_70227_1_);
         int chance = 80;
         boolean breakBrick = true;
-        if(this.random.nextInt(100) < chance){
+        if(this.random.nextInt(100) < chance && !this.level.isClientSide()){
             ItemEntity itemEntity = new ItemEntity(EntityType.ITEM, this.level);
             itemEntity.setPos(p_70227_1_.getLocation().x(), p_70227_1_.getLocation().y(), p_70227_1_.getLocation().z());
             itemEntity.setItem(new ItemStack(Items.NETHER_BRICK, 1));

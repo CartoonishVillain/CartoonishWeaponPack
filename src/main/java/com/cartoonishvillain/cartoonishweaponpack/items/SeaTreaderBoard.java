@@ -47,7 +47,7 @@ public class SeaTreaderBoard extends Item {
     public ActionResult<ItemStack> use(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
         if (!p_77659_1_.isClientSide()) {
             ItemStack Board = p_77659_2_.getItemInHand(p_77659_3_);
-            p_77659_2_.addEffect(new EffectInstance(Effects.DOLPHINS_GRACE, 20 * 10, 0));
+            p_77659_2_.addEffect(new EffectInstance(Effects.DOLPHINS_GRACE, 20 * 4, 0));
             Board.hurtAndBreak(1, p_77659_2_, (consumer) -> {
                 consumer.broadcastBreakEvent(p_77659_3_);
             });

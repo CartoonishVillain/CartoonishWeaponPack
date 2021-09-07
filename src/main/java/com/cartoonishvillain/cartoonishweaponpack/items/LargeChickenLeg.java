@@ -38,7 +38,7 @@ public class LargeChickenLeg extends ToolItem {
         if(target instanceof PlayerEntity){
             if(attacker instanceof PlayerEntity && theSwing.get() != 1.0f){return super.hurtEnemy(stack, target, attacker);}
             //Base chance for hunger is 15, with 2 added per hunger point the enemy is missing.
-            int chance = 15 + ( 2* (20 - ((PlayerEntity) target).getFoodData().getFoodLevel()));
+            int chance = 25 + ( 2* (20 - ((PlayerEntity) target).getFoodData().getFoodLevel()));
             if(random.nextInt(100) < chance){
                 //if the chance is met, apply hunger 3 for 3 seconds
                 target.addEffect(new EffectInstance(Effects.HUNGER, 60, 2));

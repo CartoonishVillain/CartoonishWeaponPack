@@ -34,7 +34,7 @@ public class ComicallyLargeSpoon extends ShovelItem {
     @Override
     public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         //Base 10% chance for panic. Having a higher armor value increases the chance by one per armor point difference. Having lower armor points decreases the chance by the point difference.
-        int panicChance = 10 + (attacker.getArmorValue() - target.getArmorValue());
+        int panicChance = 20 + (attacker.getArmorValue() - target.getArmorValue());
 
         Map<Effect, EffectInstance> effectmap = attacker.getActiveEffectsMap();
         //Each level of strength increases panic chance by 2.

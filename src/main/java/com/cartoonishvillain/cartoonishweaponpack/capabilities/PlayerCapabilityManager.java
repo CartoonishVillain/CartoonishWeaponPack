@@ -1,7 +1,7 @@
 package com.cartoonishvillain.cartoonishweaponpack.capabilities;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -10,7 +10,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class PlayerCapabilityManager implements  IPlayerCapability, ICapabilityProvider, INBTSerializable<CompoundNBT> {
+public class PlayerCapabilityManager implements  IPlayerCapability, ICapabilityProvider, INBTSerializable<CompoundTag> {
     protected float cooldownValue = 0;
     public final LazyOptional<IPlayerCapability> holder = LazyOptional.of(() -> this);
     @Override
@@ -31,14 +31,14 @@ public class PlayerCapabilityManager implements  IPlayerCapability, ICapabilityP
     }
 
     @Override
-    public CompoundNBT serializeNBT() {
-        CompoundNBT tag = new CompoundNBT();
+    public CompoundTag serializeNBT() {
+        CompoundTag tag = new CompoundTag();
         tag.putFloat("cooldown", cooldownValue);
         return tag;
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         cooldownValue = nbt.getFloat("cooldown");
     }
 }

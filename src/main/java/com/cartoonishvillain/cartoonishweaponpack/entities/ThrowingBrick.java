@@ -1,30 +1,30 @@
 package com.cartoonishvillain.cartoonishweaponpack.entities;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class ThrowingBrick extends ProjectileItemEntity {
+public class ThrowingBrick extends ThrowableItemProjectile {
 
 
-    public ThrowingBrick(EntityType<? extends ProjectileItemEntity> p_i50155_1_, World p_i50155_2_) {
+    public ThrowingBrick(EntityType<? extends ThrowableItemProjectile> p_i50155_1_, Level p_i50155_2_) {
         super(p_i50155_1_, p_i50155_2_);
     }
 
-    public ThrowingBrick(EntityType<? extends ProjectileItemEntity> type, World world, LivingEntity livingEntity) {
+    public ThrowingBrick(EntityType<? extends ThrowableItemProjectile> type, Level world, LivingEntity livingEntity) {
         super(type, livingEntity, world);
     }
 
@@ -35,7 +35,7 @@ public class ThrowingBrick extends ProjectileItemEntity {
     }
 
     @Override
-    protected void onHitEntity(EntityRayTraceResult p_213868_1_) {
+    protected void onHitEntity(EntityHitResult p_213868_1_) {
         super.onHitEntity(p_213868_1_);
         if(p_213868_1_.getEntity() instanceof LivingEntity){
             LivingEntity livingEntity = (LivingEntity) p_213868_1_.getEntity();
@@ -46,7 +46,7 @@ public class ThrowingBrick extends ProjectileItemEntity {
     }
 
     @Override
-    protected void onHit(RayTraceResult p_70227_1_) {
+    protected void onHit(HitResult p_70227_1_) {
         super.onHit(p_70227_1_);
         int chance = 60;
         boolean breakBrick = true;
@@ -60,7 +60,7 @@ public class ThrowingBrick extends ProjectileItemEntity {
 
         this.playSound(SoundEvents.STONE_HIT, 1.0F, 1.0F);
         if(breakBrick){this.playSound(SoundEvents.STONE_BREAK, 1.0f, 1.0f);}
-        this.remove(false);
+        this.remove(RemovalReason.DISCARDED);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ThrowingBrick extends ProjectileItemEntity {
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

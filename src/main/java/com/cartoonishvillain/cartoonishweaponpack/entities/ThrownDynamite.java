@@ -1,35 +1,29 @@
 package com.cartoonishvillain.cartoonishweaponpack.entities;
 
 import com.cartoonishvillain.cartoonishweaponpack.Register;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.item.TNTEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
-public class ThrownDynamite extends ProjectileItemEntity {
+public class ThrownDynamite extends ThrowableItemProjectile {
 
     int ticksAlive = 100;
 
 
-    public ThrownDynamite(EntityType<? extends ProjectileItemEntity> p_i50155_1_, World p_i50155_2_) {
+    public ThrownDynamite(EntityType<? extends ThrowableItemProjectile> p_i50155_1_, Level p_i50155_2_) {
         super(p_i50155_1_, p_i50155_2_);
     }
 
-    public ThrownDynamite(EntityType<? extends ProjectileItemEntity> type, World world, LivingEntity livingEntity) {
+    public ThrownDynamite(EntityType<? extends ThrowableItemProjectile> type, Level world, LivingEntity livingEntity) {
         super(type, livingEntity, world);
     }
 
@@ -41,10 +35,10 @@ public class ThrownDynamite extends ProjectileItemEntity {
 
 
     @Override
-    protected void onHit(RayTraceResult p_70227_1_) {
+    protected void onHit(HitResult p_70227_1_) {
         super.onHit(p_70227_1_);
-        this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.Mode.BREAK);
-        this.remove(false);
+        this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.BlockInteraction.BREAK);
+        this.remove(RemovalReason.DISCARDED);
     }
 
     @Override
@@ -52,8 +46,8 @@ public class ThrownDynamite extends ProjectileItemEntity {
         super.tick();
         ticksAlive--;
         if(ticksAlive < 0){
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.Mode.BREAK);
-            this.remove(false);
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.BlockInteraction.BREAK);
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 
@@ -63,7 +57,7 @@ public class ThrownDynamite extends ProjectileItemEntity {
     }
 
     @Override
-    public IPacket<?> getAddEntityPacket() {
+    public Packet<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

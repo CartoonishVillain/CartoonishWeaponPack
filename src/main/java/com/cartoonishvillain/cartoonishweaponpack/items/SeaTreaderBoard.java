@@ -1,25 +1,20 @@
 package com.cartoonishvillain.cartoonishweaponpack.items;
 
-import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Map;
 
 public class SeaTreaderBoard extends Item {
 
@@ -44,10 +39,10 @@ public class SeaTreaderBoard extends Item {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World p_77659_1_, PlayerEntity p_77659_2_, Hand p_77659_3_) {
+    public InteractionResultHolder<ItemStack> use(Level p_77659_1_, Player p_77659_2_, InteractionHand p_77659_3_) {
         if (!p_77659_1_.isClientSide()) {
             ItemStack Board = p_77659_2_.getItemInHand(p_77659_3_);
-            p_77659_2_.addEffect(new EffectInstance(Effects.DOLPHINS_GRACE, 20 * 10, 0));
+            p_77659_2_.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 20 * 10, 0));
             Board.hurtAndBreak(1, p_77659_2_, (consumer) -> {
                 consumer.broadcastBreakEvent(p_77659_3_);
             });
@@ -56,8 +51,8 @@ public class SeaTreaderBoard extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> p_77624_3_, ITooltipFlag p_77624_4_) {
+    public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
-        p_77624_3_.add(new TranslationTextComponent("cartoonishweapons.seatread.tooltip").withStyle(TextFormatting.BLUE));
+        p_77624_3_.add(new TranslatableComponent("cartoonishweapons.seatread.tooltip").withStyle(ChatFormatting.BLUE));
     }
 }

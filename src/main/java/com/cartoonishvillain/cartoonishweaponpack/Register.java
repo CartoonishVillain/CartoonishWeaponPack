@@ -4,13 +4,13 @@ import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingBrick;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingNetherBrick;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrownDynamite;
 import com.cartoonishvillain.cartoonishweaponpack.items.*;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -23,15 +23,15 @@ public class Register {
         ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final RegistryObject<Item> COMICALLYLARGESPOON = ITEMS.register("comicallylargespoon", ()->new ComicallyLargeSpoon(WeaponMaterials.SPOON, 7, -3.2f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static final RegistryObject<Item> SEATREADERBOARD = ITEMS.register("seatreaderboard", ()->new SeaTreaderBoard(new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
-    public static final RegistryObject<Item> LARGECHICKENLEG = ITEMS.register("largechickenleg", ()->new LargeChickenLeg(WeaponMaterials.MEAT, 5, -3.4f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static final RegistryObject<Item> BOXINGGLOVES = ITEMS.register("boxingglove", ()->new BoxingGlove(WeaponMaterials.GLOVE, 1, -1f, new Item.Properties().tab(ItemGroup.TAB_COMBAT)));
-    public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite", ()->new Dynamite(new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
+    public static final RegistryObject<Item> COMICALLYLARGESPOON = ITEMS.register("comicallylargespoon", ()->new ComicallyLargeSpoon(WeaponMaterials.SPOON, 7, -3.2f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
+    public static final RegistryObject<Item> SEATREADERBOARD = ITEMS.register("seatreaderboard", ()->new SeaTreaderBoard(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
+    public static final RegistryObject<Item> LARGECHICKENLEG = ITEMS.register("largechickenleg", ()->new LargeChickenLeg(WeaponMaterials.MEAT, 5, -3.4f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
+    public static final RegistryObject<Item> BOXINGGLOVES = ITEMS.register("boxingglove", ()->new BoxingGlove(WeaponMaterials.GLOVE, 1, -1f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
+    public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite", ()->new Dynamite(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
 
-    public static final RegistryObject<EntityType<ThrowingBrick>> THROWINGBRICK = ENTITY_TYPES.register("throwingbrick", () -> EntityType.Builder.<ThrowingBrick>of(ThrowingBrick::new, EntityClassification.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "throwingbrick").toString()));
-    public static final RegistryObject<EntityType<ThrowingNetherBrick>> THROWINGNETHERBRICK = ENTITY_TYPES.register("throwingnetherbrick", () -> EntityType.Builder.<ThrowingNetherBrick>of(ThrowingNetherBrick::new, EntityClassification.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "throwingnetherbrick").toString()));
-    public static final RegistryObject<EntityType<ThrownDynamite>> THROWNDYNAMITE = ENTITY_TYPES.register("throwndynamite", () -> EntityType.Builder.<ThrownDynamite>of(ThrownDynamite::new, EntityClassification.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "throwndynamite").toString()));
+    public static final RegistryObject<EntityType<ThrowingBrick>> THROWINGBRICK = ENTITY_TYPES.register("throwingbrick", () -> EntityType.Builder.<ThrowingBrick>of(ThrowingBrick::new, MobCategory.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "throwingbrick").toString()));
+    public static final RegistryObject<EntityType<ThrowingNetherBrick>> THROWINGNETHERBRICK = ENTITY_TYPES.register("throwingnetherbrick", () -> EntityType.Builder.<ThrowingNetherBrick>of(ThrowingNetherBrick::new, MobCategory.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "throwingnetherbrick").toString()));
+    public static final RegistryObject<EntityType<ThrownDynamite>> THROWNDYNAMITE = ENTITY_TYPES.register("throwndynamite", () -> EntityType.Builder.<ThrownDynamite>of(ThrownDynamite::new, MobCategory.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "throwndynamite").toString()));
 
 
 }

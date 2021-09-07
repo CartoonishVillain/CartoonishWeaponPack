@@ -6,21 +6,21 @@ import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapabilityManager;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingBrick;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingNetherBrick;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.TNTEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.entity.projectile.SmallFireballEntity;
-import net.minecraft.entity.projectile.SnowballEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.SmallFireball;
+import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -28,7 +28,8 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
+import net.minecraftforge.fmlserverevents.FMLServerStoppingEvent;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,7 +41,7 @@ public class ForgeBusEvents {
 
     @SubscribeEvent
     public static void playerRegister(AttachCapabilitiesEvent<Entity> event){
-        if(event.getObject() instanceof PlayerEntity){
+        if(event.getObject() instanceof Player){
         PlayerCapabilityManager provider = new PlayerCapabilityManager();
         event.addCapability(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "playercooldownreader"), provider);
         }
@@ -59,15 +60,15 @@ public class ForgeBusEvents {
     @SubscribeEvent
     public static void PlayerHurtEvent(LivingHurtEvent event){
         //occasional block only works with players on server side
-        if(event.getEntityLiving() instanceof PlayerEntity && !event.getEntityLiving().level.isClientSide()){
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+        if(event.getEntityLiving() instanceof Player && !event.getEntityLiving().level.isClientSide()){
+            Player player = (Player) event.getEntityLiving();
             //check if the player is even holding a surf board
             if(player.isHolding(Register.SEATREADERBOARD.get())){
                 int chance = 10;
                 ItemStack board;
-                Hand hand;
-                if(player.getItemInHand(Hand.MAIN_HAND).getItem().equals(Register.SEATREADERBOARD.get())) {board = player.getItemInHand(Hand.MAIN_HAND); hand = Hand.MAIN_HAND;}
-                else {board = player.getItemInHand(Hand.OFF_HAND); hand = Hand.OFF_HAND;}
+                InteractionHand hand;
+                if(player.getItemInHand(InteractionHand.MAIN_HAND).getItem().equals(Register.SEATREADERBOARD.get())) {board = player.getItemInHand(InteractionHand.MAIN_HAND); hand = InteractionHand.MAIN_HAND;}
+                else {board = player.getItemInHand(InteractionHand.OFF_HAND); hand = InteractionHand.OFF_HAND;}
                 // 10% chance for damage block
                 if(player.getRandom().nextInt(100) < chance && valid_damage(event.getSource())){
                     board.hurtAndBreak((int) event.getAmount(), player, (p_220040_1_) -> {
@@ -75,13 +76,13 @@ public class ForgeBusEvents {
                     });
                     event.setCanceled(true);
                 }
-            } else if(player.getItemInHand(Hand.MAIN_HAND).getItem().equals(Register.BOXINGGLOVES.get()) && player.getItemInHand(Hand.OFF_HAND).getItem().equals(Register.BOXINGGLOVES.get())){
+            } else if(player.getItemInHand(InteractionHand.MAIN_HAND).getItem().equals(Register.BOXINGGLOVES.get()) && player.getItemInHand(InteractionHand.OFF_HAND).getItem().equals(Register.BOXINGGLOVES.get())){
                 int chance = 15;
                 ItemStack damagedglove;
-                Hand hand;
+                InteractionHand hand;
                 //Choose which glove blocked the attack
-                if(new Random().nextInt(2) == 0) {damagedglove = player.getItemInHand(Hand.MAIN_HAND); hand = Hand.MAIN_HAND;}
-                else {damagedglove = player.getItemInHand(Hand.OFF_HAND); hand = Hand.OFF_HAND;}
+                if(new Random().nextInt(2) == 0) {damagedglove = player.getItemInHand(InteractionHand.MAIN_HAND); hand = InteractionHand.MAIN_HAND;}
+                else {damagedglove = player.getItemInHand(InteractionHand.OFF_HAND); hand = InteractionHand.OFF_HAND;}
                 // 5% chance for damage block
                 if(player.getRandom().nextInt(100) < chance && valid_damage(event.getSource())){
                     damagedglove.hurtAndBreak((int) event.getAmount()*2, player, (p_220040_1_) -> {
@@ -96,32 +97,32 @@ public class ForgeBusEvents {
     @SubscribeEvent
     public static void PlayerClickVanillaEvent(PlayerInteractEvent.RightClickItem event){
         if(!event.getPlayer().level.isClientSide()){
-            ItemStack offhand = event.getPlayer().getItemInHand(Hand.OFF_HAND);
-            if((event.getItemStack().getItem().equals(Items.BRICK) || event.getItemStack().getItem().equals(Items.NETHER_BRICK)) && event.getHand() == Hand.MAIN_HAND) {
-                ProjectileItemEntity throwingBrick;
+            ItemStack offhand = event.getPlayer().getItemInHand(InteractionHand.OFF_HAND);
+            if((event.getItemStack().getItem().equals(Items.BRICK) || event.getItemStack().getItem().equals(Items.NETHER_BRICK)) && event.getHand() == InteractionHand.MAIN_HAND) {
+                ThrowableItemProjectile throwingBrick;
 
                 if(event.getItemStack().getItem().equals(Items.BRICK)) {
                     throwingBrick = new ThrowingBrick(Register.THROWINGBRICK.get(), event.getWorld(), event.getPlayer());
                 }else {
                     throwingBrick = new ThrowingNetherBrick(Register.THROWINGNETHERBRICK.get(), event.getWorld(), event.getPlayer());
                 }
-                throwingBrick.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0.0f, 1f, 1.0f);
+                throwingBrick.shootFromRotation(event.getPlayer(), event.getPlayer().getXRot(), event.getPlayer().getYRot(), 0.0f, 1f, 1.0f);
                 event.getWorld().addFreshEntity(throwingBrick);
                 event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 30);
                 event.getItemStack().shrink(1);
             }
             else if (event.getItemStack().getItem().equals(Items.TNT) && (offhand.getItem().equals(Items.FLINT_AND_STEEL) || offhand.getItem().equals(Items.FIRE_CHARGE))){
-                SnowballEntity snowballEntity = new SnowballEntity(EntityType.SNOWBALL, event.getWorld());
+                Snowball snowballEntity = new Snowball(EntityType.SNOWBALL, event.getWorld());
                 snowballEntity.setPos(event.getPlayer().getX(), event.getPlayer().getY()+2, event.getPlayer().getZ());
-                snowballEntity.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0.0f, 0.6f, 1.0f);
+                snowballEntity.shootFromRotation(event.getPlayer(), event.getPlayer().getXRot(), event.getPlayer().getYRot(), 0.0f, 0.6f, 1.0f);
                 snowballEntity.setInvisible(true);
-                TNTEntity tntEntity = new TNTEntity(EntityType.TNT, event.getWorld());
+                PrimedTnt tntEntity = new PrimedTnt(EntityType.TNT, event.getWorld());
                 event.getWorld().addFreshEntity(snowballEntity);
                 tntEntity.setPos(snowballEntity.getX(), snowballEntity.getY(), snowballEntity.getZ());
                 tntEntity.setDeltaMovement(snowballEntity.getDeltaMovement());
                 event.getWorld().addFreshEntity(tntEntity);
                 tntEntity.playSound(SoundEvents.TNT_PRIMED, 1.0f, 1.0f);
-                snowballEntity.remove(false);
+                snowballEntity.remove(Entity.RemovalReason.DISCARDED);
 
                 event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 60);
                 event.getItemStack().shrink(1);
@@ -129,12 +130,12 @@ public class ForgeBusEvents {
                 if(offhand.getItem().equals(Items.FIRE_CHARGE)){offhand.shrink(1);}
                 else {
                     offhand.hurtAndBreak(1, event.getPlayer(), (p_220040_1_) -> {
-                        p_220040_1_.broadcastBreakEvent(Hand.OFF_HAND);
+                        p_220040_1_.broadcastBreakEvent(InteractionHand.OFF_HAND);
                     });
                 }
-            } else if(event.getItemStack().getItem().equals(Items.FIRE_CHARGE) && event.getHand() == Hand.MAIN_HAND){
-                SmallFireballEntity smallFireballEntity = new SmallFireballEntity(EntityType.SMALL_FIREBALL, event.getWorld());
-                smallFireballEntity.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0.0f, 5f, 1.0f);
+            } else if(event.getItemStack().getItem().equals(Items.FIRE_CHARGE) && event.getHand() == InteractionHand.MAIN_HAND){
+                SmallFireball smallFireballEntity = new SmallFireball(EntityType.SMALL_FIREBALL, event.getWorld());
+                smallFireballEntity.shootFromRotation(event.getPlayer(), event.getPlayer().getXRot(), event.getPlayer().getYRot(), 0.0f, 5f, 1.0f);
                 smallFireballEntity.setPos(event.getPlayer().getX(), event.getPlayer().getY()+1, event.getPlayer().getZ());
                 event.getWorld().addFreshEntity(smallFireballEntity);
                 event.getItemStack().shrink(1);
@@ -157,7 +158,7 @@ public class ForgeBusEvents {
         }
         for(Entity entity : entitiesToRemove){
             trackedEntities.remove(entity);
-            entity.remove(true);
+            entity.remove(Entity.RemovalReason.DISCARDED);
         }
 
     }
@@ -165,21 +166,21 @@ public class ForgeBusEvents {
     @SubscribeEvent
     public static void fireballCancel(FMLServerStoppingEvent event){
         for(Entity entity : trackedEntities){
-            entity.remove(false);
+            entity.remove(Entity.RemovalReason.DISCARDED);
         }
     }
 
     @SubscribeEvent
     public static void ItemToolTips(ItemTooltipEvent event){
         if (event.getItemStack().getItem().equals(Items.BRICK) || event.getItemStack().getItem().equals(Items.NETHER_BRICK)) {
-            event.getToolTip().add(new TranslationTextComponent("cartoonishweapons.brick.tooltip").withStyle(TextFormatting.BLUE));
+            event.getToolTip().add(new TranslatableComponent("cartoonishweapons.brick.tooltip").withStyle(ChatFormatting.BLUE));
         }
         else if (event.getItemStack().getItem().equals(Items.TNT)){
-            event.getToolTip().add(new TranslationTextComponent("cartoonishweapons.tnt.tooltip").withStyle(TextFormatting.BLUE));
+            event.getToolTip().add(new TranslatableComponent("cartoonishweapons.tnt.tooltip").withStyle(ChatFormatting.BLUE));
         }
         else if (event.getItemStack().getItem().equals(Items.FIRE_CHARGE)){
-            event.getToolTip().add(new TranslationTextComponent("cartoonishweapons.firecharge.tooltip").withStyle(TextFormatting.BLUE));
-            event.getToolTip().add(new TranslationTextComponent("cartoonishweapons.firecharge.warn").withStyle(TextFormatting.RED));
+            event.getToolTip().add(new TranslatableComponent("cartoonishweapons.firecharge.tooltip").withStyle(ChatFormatting.BLUE));
+            event.getToolTip().add(new TranslatableComponent("cartoonishweapons.firecharge.warn").withStyle(ChatFormatting.RED));
         }
 
     }

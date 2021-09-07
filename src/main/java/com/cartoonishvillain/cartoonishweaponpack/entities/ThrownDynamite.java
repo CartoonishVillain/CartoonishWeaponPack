@@ -1,5 +1,6 @@
 package com.cartoonishvillain.cartoonishweaponpack.entities;
 
+import com.cartoonishvillain.cartoonishweaponpack.Register;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -35,7 +36,7 @@ public class ThrownDynamite extends ProjectileItemEntity {
     @Override
     @OnlyIn(Dist.CLIENT)
     public ItemStack getItem() {
-        return new ItemStack(Items.BRICK);
+        return new ItemStack(Register.DYNAMITE.get());
     }
 
 
@@ -58,7 +59,7 @@ public class ThrownDynamite extends ProjectileItemEntity {
 
     @Override
     protected Item getDefaultItem() {
-        return Items.BRICK;
+        return Register.DYNAMITE.get();
     }
 
     @Override

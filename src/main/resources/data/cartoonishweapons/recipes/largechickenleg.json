@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#CC",
+    "CBC",
+    "BC#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:honey_block"
+    },
+    "C": {
+      "item": "minecraft:cooked_chicken"
+    },
+    "B": {
+      "item": "minecraft:bone"
+    }
+  },
+  "result": {
+    "item": "cartoonishweapons:largechickenleg",
+    "count": 1
+  }
+}

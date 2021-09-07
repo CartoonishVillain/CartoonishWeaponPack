@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#RS",
+    "RRR"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    },
+    "R": {
+      "item": "minecraft:red_wool"
+    },
+    "S": {
+      "item": "minecraft:sugar_cane"
+    }
+  },
+  "result": {
+    "item": "cartoonishweapons:boxingglove",
+    "count": 1
+  }
+}

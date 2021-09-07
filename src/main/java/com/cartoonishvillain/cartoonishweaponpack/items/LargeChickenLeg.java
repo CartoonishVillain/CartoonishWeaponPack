@@ -2,6 +2,7 @@ package com.cartoonishvillain.cartoonishweaponpack.items;
 
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -11,8 +12,14 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import javax.tools.Tool;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -40,7 +47,7 @@ public class LargeChickenLeg extends ToolItem {
             if(attacker instanceof PlayerEntity && theSwing.get() != 1.0f){return super.hurtEnemy(stack, target, attacker);}
             Vector3d direction = attacker.getPosition(0).subtract(target.getPosition(0));
             direction = direction.normalize();
-            target.knockback(1, direction.x, direction.z);
+            target.knockback(1.5f, direction.x, direction.z);
         }
 
         return super.hurtEnemy(stack, target, attacker);
@@ -49,6 +56,12 @@ public class LargeChickenLeg extends ToolItem {
     @Override
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         return !enchantment.getDescriptionId().equals(Enchantments.FIRE_ASPECT.getDescriptionId());
+    }
+
+    @Override
+    public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> p_77624_3_, ITooltipFlag p_77624_4_) {
+        super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
+        p_77624_3_.add(new TranslationTextComponent("cartoonishweapons.chicken.tooltip").withStyle(TextFormatting.BLUE));
     }
 
 

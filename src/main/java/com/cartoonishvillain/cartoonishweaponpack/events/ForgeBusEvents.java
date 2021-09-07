@@ -19,9 +19,12 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -73,7 +76,7 @@ public class ForgeBusEvents {
                     event.setCanceled(true);
                 }
             } else if(player.getItemInHand(Hand.MAIN_HAND).getItem().equals(Register.BOXINGGLOVES.get()) && player.getItemInHand(Hand.OFF_HAND).getItem().equals(Register.BOXINGGLOVES.get())){
-                int chance = 5;
+                int chance = 15;
                 ItemStack damagedglove;
                 Hand hand;
                 //Choose which glove blocked the attack
@@ -164,6 +167,21 @@ public class ForgeBusEvents {
         for(Entity entity : trackedEntities){
             entity.remove(false);
         }
+    }
+
+    @SubscribeEvent
+    public static void ItemToolTips(ItemTooltipEvent event){
+        if (event.getItemStack().getItem().equals(Items.BRICK) || event.getItemStack().getItem().equals(Items.NETHER_BRICK)) {
+            event.getToolTip().add(new TranslationTextComponent("cartoonishweapons.brick.tooltip").withStyle(TextFormatting.BLUE));
+        }
+        else if (event.getItemStack().getItem().equals(Items.TNT)){
+            event.getToolTip().add(new TranslationTextComponent("cartoonishweapons.tnt.tooltip").withStyle(TextFormatting.BLUE));
+        }
+        else if (event.getItemStack().getItem().equals(Items.FIRE_CHARGE)){
+            event.getToolTip().add(new TranslationTextComponent("cartoonishweapons.firecharge.tooltip").withStyle(TextFormatting.BLUE));
+            event.getToolTip().add(new TranslationTextComponent("cartoonishweapons.firecharge.warn").withStyle(TextFormatting.RED));
+        }
+
     }
 
     private static boolean valid_damage(DamageSource damageSource){

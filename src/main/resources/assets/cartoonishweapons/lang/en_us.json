@@ -1,0 +1,22 @@
+{
+  "cartoonishweapons.brick.tooltip": "When held in your main hand, right click to throw. Does bonus damage to armored targets. High chance of the brick being recoverable.",
+  "cartoonishweapons.tnt.tooltip": "When held in your main hand with a flint and steel or fire charge in your offhand, you can right click to chuck an ignited tnt a short distance!",
+  "cartoonishweapons.firecharge.tooltip": "When held in your main hand, right click to throw the fire charge within a medium range.",
+  "cartoonishweapons.firecharge.warn": "May kick back and ignite the user for a short while.",
+  "cartoonishweapons.boxingglove.tooltip": "Chance to block with gloves on both hands. Also chance for a heavy knockback attack when gloves are in both hands.",
+  "cartoonishweapons.spoon.tooltip": "Has a chance to inflict panic with every hit. (Slowness 5 for 5 seconds).",
+  "cartoonishweapons.spoon.info": "Chance to inflict panic scales based on armor and health differences against the target.",
+  "cartoonishweapons.dynamite.tooltip": "When held in main hand with a flint and steel in the offhand, dynamite allows you to throw explosives weaker than TNT much further than TNT.",
+  "cartoonishweapons.chicken.tooltip": "Chance to inflict hunger on players based on how hungry they are. For all other entities knockback is increased.",
+  "cartoonishweapons.seatread.tooltip": "Chance to block incoming damage. Right click to apply a short Dolphin's Grace effect.",
+  "item.cartoonishweapons.comicallylargespoon": "Comically Large Spoon",
+  "item.cartoonishweapons.seatreaderboard": "Sea Treader Board",
+  "item.cartoonishweapons.largechickenleg": "Large Chicken Leg",
+  "item.cartoonishweapons.boxingglove": "Boxing Glove",
+  "item.cartoonishweapons.dynamite": "Dynamite",
+  "entity.cartoonishweapons.throwingbrick": "Thrown Brick",
+  "entity.cartoonishweapons.dynamite": "Thrown Dynamite",
+  "entity.cartoonishweapons.throwingnetherbrick": "Thrown Nether Brick"
+
+
+}

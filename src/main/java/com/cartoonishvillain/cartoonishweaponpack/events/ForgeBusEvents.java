@@ -5,10 +5,12 @@ import com.cartoonishvillain.cartoonishweaponpack.Register;
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapabilityManager;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingBrick;
+import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingNetherBrick;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.entity.projectile.SmallFireballEntity;
 import net.minecraft.entity.projectile.SnowballEntity;
 import net.minecraft.item.ItemStack;
@@ -92,9 +94,14 @@ public class ForgeBusEvents {
     public static void PlayerClickVanillaEvent(PlayerInteractEvent.RightClickItem event){
         if(!event.getPlayer().level.isClientSide()){
             ItemStack offhand = event.getPlayer().getItemInHand(Hand.OFF_HAND);
-            if(event.getItemStack().getItem().equals(Items.BRICK) && event.getHand() == Hand.MAIN_HAND) {
-                ThrowingBrick throwingBrick = new ThrowingBrick(Register.THROWINGBRICK.get(), event.getWorld(), event.getPlayer());
-                throwingBrick.setItem(new ItemStack(Items.BRICK, 1));
+            if((event.getItemStack().getItem().equals(Items.BRICK) || event.getItemStack().getItem().equals(Items.NETHER_BRICK)) && event.getHand() == Hand.MAIN_HAND) {
+                ProjectileItemEntity throwingBrick;
+
+                if(event.getItemStack().getItem().equals(Items.BRICK)) {
+                    throwingBrick = new ThrowingBrick(Register.THROWINGBRICK.get(), event.getWorld(), event.getPlayer());
+                }else {
+                    throwingBrick = new ThrowingNetherBrick(Register.THROWINGNETHERBRICK.get(), event.getWorld(), event.getPlayer());
+                }
                 throwingBrick.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0.0f, 1f, 1.0f);
                 event.getWorld().addFreshEntity(throwingBrick);
                 event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 30);

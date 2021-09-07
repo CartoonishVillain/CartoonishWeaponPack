@@ -17,21 +17,21 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class ThrowingBrick extends ProjectileItemEntity {
+public class ThrowingNetherBrick extends ProjectileItemEntity {
 
 
-    public ThrowingBrick(EntityType<? extends ProjectileItemEntity> p_i50155_1_, World p_i50155_2_) {
+    public ThrowingNetherBrick(EntityType<? extends ProjectileItemEntity> p_i50155_1_, World p_i50155_2_) {
         super(p_i50155_1_, p_i50155_2_);
     }
 
-    public ThrowingBrick(EntityType<? extends ProjectileItemEntity> type, World world, LivingEntity livingEntity) {
+    public ThrowingNetherBrick(EntityType<? extends ProjectileItemEntity> type, World world, LivingEntity livingEntity) {
         super(type, livingEntity, world);
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public ItemStack getItem() {
-        return new ItemStack(Items.BRICK);
+        return new ItemStack(Items.NETHER_BRICK);
     }
 
     @Override
@@ -48,12 +48,12 @@ public class ThrowingBrick extends ProjectileItemEntity {
     @Override
     protected void onHit(RayTraceResult p_70227_1_) {
         super.onHit(p_70227_1_);
-        int chance = 60;
+        int chance = 80;
         boolean breakBrick = true;
         if(this.random.nextInt(100) < chance){
             ItemEntity itemEntity = new ItemEntity(EntityType.ITEM, this.level);
             itemEntity.setPos(p_70227_1_.getLocation().x(), p_70227_1_.getLocation().y(), p_70227_1_.getLocation().z());
-            itemEntity.setItem(new ItemStack(Items.BRICK, 1));
+            itemEntity.setItem(new ItemStack(Items.NETHER_BRICK, 1));
             this.level.addFreshEntity(itemEntity);
             breakBrick = false;
         }
@@ -65,7 +65,7 @@ public class ThrowingBrick extends ProjectileItemEntity {
 
     @Override
     protected Item getDefaultItem() {
-        return Items.BRICK;
+        return Items.NETHER_BRICK;
     }
 
     @Override

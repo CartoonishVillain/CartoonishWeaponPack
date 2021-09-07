@@ -1,6 +1,7 @@
 package com.cartoonishvillain.cartoonishweaponpack;
 
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingBrick;
+import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingNetherBrick;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrownDynamite;
 import com.cartoonishvillain.cartoonishweaponpack.items.*;
 import net.minecraft.entity.EntityClassification;
@@ -29,6 +30,7 @@ public class Register {
     public static final RegistryObject<Item> DYNAMITE = ITEMS.register("dynamite", ()->new Dynamite(new Item.Properties().tab(ItemGroup.TAB_TOOLS)));
 
     public static final RegistryObject<EntityType<ThrowingBrick>> THROWINGBRICK = ENTITY_TYPES.register("throwingbrick", () -> EntityType.Builder.<ThrowingBrick>of(ThrowingBrick::new, EntityClassification.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "throwingbrick").toString()));
+    public static final RegistryObject<EntityType<ThrowingNetherBrick>> THROWINGNETHERBRICK = ENTITY_TYPES.register("throwingnetherbrick", () -> EntityType.Builder.<ThrowingNetherBrick>of(ThrowingNetherBrick::new, EntityClassification.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "throwingnetherbrick").toString()));
     public static final RegistryObject<EntityType<ThrownDynamite>> THROWNDYNAMITE = ENTITY_TYPES.register("throwndynamite", () -> EntityType.Builder.<ThrownDynamite>of(ThrownDynamite::new, EntityClassification.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(CartoonishWeaponPack.MOD_ID, "throwndynamite").toString()));
 
 

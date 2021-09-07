@@ -13,6 +13,7 @@ public class RenderManager {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event){
         RenderingRegistry.registerEntityRenderingHandler(Register.THROWINGBRICK.get(), new GenericProjectileRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(Register.THROWINGNETHERBRICK.get(), new GenericProjectileRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(Register.THROWNDYNAMITE.get(), new GenericProjectileRenderFactory());
 
     }

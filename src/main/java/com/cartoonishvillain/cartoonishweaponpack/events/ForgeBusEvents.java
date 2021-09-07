@@ -110,7 +110,7 @@ public class ForgeBusEvents {
                 event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 30);
                 event.getItemStack().shrink(1);
             }
-            else if (event.getItemStack().getItem().equals(Items.TNT) && (offhand.getItem().equals(Items.FLINT_AND_STEEL) || offhand.getItem().equals(Items.FIRE_CHARGE))){
+            else if (event.getItemStack().getItem().equals(Items.TNT) && (offhand.getItem().equals(Items.FLINT_AND_STEEL) || offhand.getItem().equals(Items.FIRE_CHARGE)) && (event.getPlayer().isCrouching() || event.getPlayer().isFallFlying())){
                 SnowballEntity snowballEntity = new SnowballEntity(EntityType.SNOWBALL, event.getWorld());
                 snowballEntity.setPos(event.getPlayer().getX(), event.getPlayer().getY()+2, event.getPlayer().getZ());
                 snowballEntity.shootFromRotation(event.getPlayer(), event.getPlayer().xRot, event.getPlayer().yRot, 0.0f, 0.6f, 1.0f);

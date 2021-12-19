@@ -26,9 +26,10 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmlserverevents.FMLServerStoppingEvent;
+
 
 
 import java.util.ArrayList;
@@ -164,7 +165,7 @@ public class ForgeBusEvents {
     }
 
     @SubscribeEvent
-    public static void fireballCancel(FMLServerStoppingEvent event){
+    public static void fireballCancel(ServerStoppingEvent event){
         for(Entity entity : trackedEntities){
             entity.remove(Entity.RemovalReason.DISCARDED);
         }

@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -22,7 +23,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class LargeChickenLeg extends DiggerItem {
     public LargeChickenLeg(Tier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builderIn) {
-        super((float)attackDamageIn, attackSpeedIn, tier, Tag.fromSet(ImmutableSet.of()), builderIn);
+        super((float)attackDamageIn, attackSpeedIn, tier, BlockTags.MINEABLE_WITH_SHOVEL, builderIn);
     }
 
 

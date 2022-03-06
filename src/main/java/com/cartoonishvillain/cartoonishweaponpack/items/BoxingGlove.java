@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class BoxingGlove extends DiggerItem {
     public BoxingGlove(Tier p_i48460_1_, int p_i48460_2_, float p_i48460_3_, Properties p_i48460_4_) {
-        super((float)p_i48460_2_, p_i48460_3_, p_i48460_1_, Tag.fromSet(ImmutableSet.of()), p_i48460_4_);
+        super((float)p_i48460_2_, p_i48460_3_, p_i48460_1_, BlockTags.MINEABLE_WITH_SHOVEL, p_i48460_4_);
     }
 
     @Override

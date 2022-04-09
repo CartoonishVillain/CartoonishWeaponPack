@@ -1,5 +1,10 @@
 package com.cartoonishvillain.cartoonishweaponpack;
 
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementProgress;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -54,6 +59,17 @@ public class CartoonishWeaponPack
 
     }
 
-
-
+    public static void giveAdvancement(ServerPlayer player, MinecraftServer server, ResourceLocation advancementResource) {
+        if (player != null) {
+            Advancement advancement = server.getAdvancements().getAdvancement(advancementResource);
+            if (advancement != null) {
+                AdvancementProgress advancementprogress = player.getAdvancements().getOrStartProgress(advancement);
+                if (!advancementprogress.isDone()) {
+                    for (String s : advancementprogress.getRemainingCriteria()) {
+                        player.getAdvancements().award(advancement, s);
+                    }
+                }
+            }
+        }
+    }
 }

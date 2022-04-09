@@ -1,18 +1,21 @@
 package com.cartoonishvillain.cartoonishweaponpack.items;
 
+import com.cartoonishvillain.cartoonishweaponpack.CartoonishWeaponPack;
+import com.cartoonishvillain.cartoonishweaponpack.Register;
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShovelItem;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -42,12 +45,19 @@ public class ComicallyLargeSpoon extends ShovelItem {
         panicChance += ((attacker.getHealth() - target.getHealth())/4);
 
         //only allow players w/ a full swing meter to panic
-        if(attacker instanceof Player){
+        if(attacker instanceof Player && !attacker.level.isClientSide){
+            if(this.getRegistryName().equals(Register.GIGASPOON.get().getRegistryName())) {
+                attacker.level.playSound(null, attacker.getOnPos(), SoundEvents.IRON_GOLEM_HURT, SoundSource.PLAYERS, 1, 1);
+            }
             int finalPanicChance = panicChance;
             attacker.getCapability(PlayerCapability.INSTANCE).ifPresent(h->{
                 float check = h.getCooldownValue();
                 if(attacker.getRandom().nextInt(100) < finalPanicChance &&  check == 1){
                     target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 5* 20, 5));
+                    CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "spoon"));
+                    if(this.getRegistryName().equals(Register.GIGASPOON.get().getRegistryName())) {
+                        CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "legends"));
+                    }
                 }
             });
         }

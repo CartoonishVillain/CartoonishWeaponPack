@@ -6,6 +6,7 @@ import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapabilityManager;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingBrick;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingNetherBrick;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.PrimedTnt;
@@ -111,6 +112,7 @@ public class ForgeBusEvents {
                 event.getWorld().addFreshEntity(throwingBrick);
                 event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 30);
                 event.getItemStack().shrink(1);
+                CartoonishWeaponPack.giveAdvancement((ServerPlayer) event.getPlayer(), event.getPlayer().getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "bricked"));
             }
             else if (event.getItemStack().getItem().equals(Items.TNT) && (offhand.getItem().equals(Items.FLINT_AND_STEEL) || offhand.getItem().equals(Items.FIRE_CHARGE)) && (event.getPlayer().isCrouching() || event.getPlayer().isFallFlying())){
                 Snowball snowballEntity = new Snowball(EntityType.SNOWBALL, event.getWorld());
@@ -127,6 +129,8 @@ public class ForgeBusEvents {
 
                 event.getPlayer().getCooldowns().addCooldown(event.getItemStack().getItem(), 60);
                 event.getItemStack().shrink(1);
+
+                CartoonishWeaponPack.giveAdvancement((ServerPlayer) event.getPlayer(), event.getPlayer().getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "bombs"));
 
                 if(offhand.getItem().equals(Items.FIRE_CHARGE)){offhand.shrink(1);}
                 else {
@@ -145,6 +149,7 @@ public class ForgeBusEvents {
                 event.getPlayer().setSecondsOnFire(3);}
                 trackedEntities.add(smallFireballEntity);
                 smallFireballEntity.playSound(SoundEvents.BLAZE_SHOOT, 1, 1);
+                CartoonishWeaponPack.giveAdvancement((ServerPlayer) event.getPlayer(), event.getPlayer().getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "fireball"));
             }
         }
     }

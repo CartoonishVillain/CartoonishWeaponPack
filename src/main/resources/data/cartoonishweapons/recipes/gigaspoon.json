@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#nC",
+    "nDn",
+    "CnC"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:heart_of_the_sea"
+    },
+    "n": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "C": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "D": {
+      "item": "cartoonishweapons:comicallylargespoon"
+    }
+  },
+  "result": {
+    "item": "cartoonishweapons:gigaspoon",
+    "count": 1
+  }
+}

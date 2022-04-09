@@ -1,11 +1,14 @@
 package com.cartoonishvillain.cartoonishweaponpack.items;
 
+import com.cartoonishvillain.cartoonishweaponpack.CartoonishWeaponPack;
 import com.cartoonishvillain.cartoonishweaponpack.Register;
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.InteractionHand;
@@ -40,10 +43,12 @@ public class BoxingGlove extends DiggerItem {
                 Vec3 direction = attacker.getPosition(0).subtract(target.getPosition(0));
                 direction = direction.normalize();
                 target.knockback(2.5f, direction.x, direction.z);
+                CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "boxing"));
             }else if (chance == 2){
                 Vec3 direction = attacker.getPosition(0).subtract(target.getPosition(0));
                 direction = direction.normalize();
                 target.knockback(2f, direction.x, direction.z);
+                CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "boxing"));
             }
 
         }

@@ -1,8 +1,11 @@
 package com.cartoonishvillain.cartoonishweaponpack.items;
 
+import com.cartoonishvillain.cartoonishweaponpack.CartoonishWeaponPack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -46,6 +49,8 @@ public class SeaTreaderBoard extends Item {
             Board.hurtAndBreak(1, p_77659_2_, (consumer) -> {
                 consumer.broadcastBreakEvent(p_77659_3_);
             });
+            CartoonishWeaponPack.giveAdvancement((ServerPlayer) p_77659_2_, p_77659_2_.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "tread"));
+
         }
         return super.use(p_77659_1_, p_77659_2_, p_77659_3_);
     }

@@ -1,0 +1,24 @@
+{
+    "__comment": "Made with TheDestruc7i0n's advancements generator: https://advancements.thedestruc7i0n.ca",
+    "display": {
+        "title": {
+            "text": "THIS MANIAC HAS A SPOON!"
+        },
+        "description": {
+            "text": "Stun an enemy with a comically large spoon"
+        },
+        "icon": {
+            "item": "cartoonishweapons:comicallylargespoon"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "Impossible": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "parent": "cartoonishweapons:root"
+}

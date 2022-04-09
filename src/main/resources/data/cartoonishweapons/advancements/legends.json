@@ -1,0 +1,26 @@
+{
+    "__comment": "Made with TheDestruc7i0n's advancements generator: https://advancements.thedestruc7i0n.ca",
+    "display": {
+        "title": {
+            "text": "For All You Legends",
+            "color": "dark_red"
+        },
+        "description": {
+            "text": "Now this is a spoon.",
+            "color": "dark_red"
+        },
+        "icon": {
+            "item": "cartoonishweapons:gigaspoon"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": true
+    },
+    "criteria": {
+        "Impossible": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "parent": "cartoonishweapons:root"
+}

@@ -1,0 +1,24 @@
+{
+    "__comment": "Made with TheDestruc7i0n's advancements generator: https://advancements.thedestruc7i0n.ca",
+    "display": {
+        "title": {
+            "text": "Cartoonish Weapon Pack"
+        },
+        "description": {
+            "text": "Weapons at the ready!"
+        },
+        "icon": {
+            "item": "cartoonishweapons:dynamite"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false,
+        "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+    },
+    "criteria": {
+        "Login": {
+            "trigger": "minecraft:tick"
+        }
+    }
+}

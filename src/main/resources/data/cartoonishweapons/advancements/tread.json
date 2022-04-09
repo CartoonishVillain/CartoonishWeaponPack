@@ -1,0 +1,24 @@
+{
+    "__comment": "Made with TheDestruc7i0n's advancements generator: https://advancements.thedestruc7i0n.ca",
+    "display": {
+        "title": {
+            "text": "Surf's Up"
+        },
+        "description": {
+            "text": "Use a Sea Treader board"
+        },
+        "icon": {
+            "item": "cartoonishweapons:seatreaderboard"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "Impossible": {
+            "trigger": "minecraft:impossible"
+        }
+    },
+    "parent": "cartoonishweapons:root"
+}

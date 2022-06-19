@@ -1,11 +1,9 @@
 package com.cartoonishvillain.cartoonishweaponpack.items;
 
 import com.cartoonishvillain.cartoonishweaponpack.CartoonishWeaponPack;
-import com.cartoonishvillain.cartoonishweaponpack.Register;
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -15,7 +13,10 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -25,8 +26,17 @@ import java.util.List;
 import java.util.Map;
 
 public class ComicallyLargeSpoon extends ShovelItem {
-    public ComicallyLargeSpoon(Tier tier, int attackDamageIn, float attackSpeedIn, Properties builderIn) {
+
+    public enum SpoonType {
+        STANDARD,
+        GIGA
+    }
+
+    SpoonType spoonType;
+
+    public ComicallyLargeSpoon(Tier tier, SpoonType spoonType, int attackDamageIn, float attackSpeedIn, Properties builderIn) {
         super(tier, attackDamageIn, attackSpeedIn, builderIn);
+        this.spoonType = spoonType;
     }
 
 
@@ -46,7 +56,7 @@ public class ComicallyLargeSpoon extends ShovelItem {
 
         //only allow players w/ a full swing meter to panic
         if(attacker instanceof Player && !attacker.level.isClientSide){
-            if(this.getRegistryName().equals(Register.GIGASPOON.get().getRegistryName())) {
+            if(this.spoonType.equals(SpoonType.GIGA)) {
                 attacker.level.playSound(null, attacker.getOnPos(), SoundEvents.IRON_GOLEM_HURT, SoundSource.PLAYERS, 1, 1);
             }
             int finalPanicChance = panicChance;
@@ -55,7 +65,7 @@ public class ComicallyLargeSpoon extends ShovelItem {
                 if(attacker.getRandom().nextInt(100) < finalPanicChance &&  check == 1){
                     target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 5* 20, 5));
                     CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "spoon"));
-                    if(this.getRegistryName().equals(Register.GIGASPOON.get().getRegistryName())) {
+                    if(this.spoonType.equals(SpoonType.GIGA)) {
                         CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "legends"));
                     }
                 }
@@ -74,8 +84,8 @@ public class ComicallyLargeSpoon extends ShovelItem {
     @Override
     public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
-        p_77624_3_.add(new TranslatableComponent("cartoonishweapons.spoon.tooltip").withStyle(ChatFormatting.BLUE));
-        p_77624_3_.add(new TranslatableComponent("cartoonishweapons.spoon.info").withStyle(ChatFormatting.GRAY));
+        p_77624_3_.add(Component.translatable("cartoonishweapons.spoon.tooltip").withStyle(ChatFormatting.BLUE));
+        p_77624_3_.add(Component.translatable("cartoonishweapons.spoon.info").withStyle(ChatFormatting.GRAY));
     }
 
 

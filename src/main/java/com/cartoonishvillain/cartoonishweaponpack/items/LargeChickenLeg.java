@@ -1,12 +1,9 @@
 package com.cartoonishvillain.cartoonishweaponpack.items;
 
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
-import com.google.common.collect.ImmutableSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -59,7 +56,7 @@ public class LargeChickenLeg extends DiggerItem {
     @Override
     public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
-        p_77624_3_.add(new TranslatableComponent("cartoonishweapons.chicken.tooltip").withStyle(ChatFormatting.BLUE));
+        p_77624_3_.add(Component.translatable("cartoonishweapons.chicken.tooltip").withStyle(ChatFormatting.BLUE));
     }
 
 

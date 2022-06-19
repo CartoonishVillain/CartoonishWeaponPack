@@ -23,8 +23,8 @@ public class Register {
         ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final RegistryObject<Item> COMICALLYLARGESPOON = ITEMS.register("comicallylargespoon", ()->new ComicallyLargeSpoon(WeaponMaterials.SPOON, 5, -2.8f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
-    public static final RegistryObject<Item> GIGASPOON = ITEMS.register("gigaspoon", ()->new ComicallyLargeSpoon(WeaponMaterials.BIGSPOON, 10, -3.5f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
+    public static final RegistryObject<Item> COMICALLYLARGESPOON = ITEMS.register("comicallylargespoon", ()->new ComicallyLargeSpoon(WeaponMaterials.SPOON, ComicallyLargeSpoon.SpoonType.STANDARD, 5, -2.8f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
+    public static final RegistryObject<Item> GIGASPOON = ITEMS.register("gigaspoon", ()->new ComicallyLargeSpoon(WeaponMaterials.BIGSPOON, ComicallyLargeSpoon.SpoonType.GIGA, 10, -3.5f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
     public static final RegistryObject<Item> SEATREADERBOARD = ITEMS.register("seatreaderboard", ()->new SeaTreaderBoard(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS)));
     public static final RegistryObject<Item> LARGECHICKENLEG = ITEMS.register("largechickenleg", ()->new LargeChickenLeg(WeaponMaterials.MEAT, 5, -3.0f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));
     public static final RegistryObject<Item> BOXINGGLOVES = ITEMS.register("boxingglove", ()->new BoxingGlove(WeaponMaterials.GLOVE, 1, -1f, new Item.Properties().tab(CreativeModeTab.TAB_COMBAT)));

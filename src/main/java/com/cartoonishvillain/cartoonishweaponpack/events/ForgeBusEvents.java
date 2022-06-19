@@ -6,6 +6,7 @@ import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapability;
 import com.cartoonishvillain.cartoonishweaponpack.capabilities.PlayerCapabilityManager;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingBrick;
 import com.cartoonishvillain.cartoonishweaponpack.entities.ThrowingNetherBrick;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -21,7 +22,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -179,14 +179,14 @@ public class ForgeBusEvents {
     @SubscribeEvent
     public static void ItemToolTips(ItemTooltipEvent event){
         if (event.getItemStack().getItem().equals(Items.BRICK) || event.getItemStack().getItem().equals(Items.NETHER_BRICK)) {
-            event.getToolTip().add(new TranslatableComponent("cartoonishweapons.brick.tooltip").withStyle(ChatFormatting.BLUE));
+            event.getToolTip().add(Component.translatable("cartoonishweapons.brick.tooltip").withStyle(ChatFormatting.BLUE));
         }
         else if (event.getItemStack().getItem().equals(Items.TNT)){
-            event.getToolTip().add(new TranslatableComponent("cartoonishweapons.tnt.tooltip").withStyle(ChatFormatting.BLUE));
+            event.getToolTip().add(Component.translatable("cartoonishweapons.tnt.tooltip").withStyle(ChatFormatting.BLUE));
         }
         else if (event.getItemStack().getItem().equals(Items.FIRE_CHARGE)){
-            event.getToolTip().add(new TranslatableComponent("cartoonishweapons.firecharge.tooltip").withStyle(ChatFormatting.BLUE));
-            event.getToolTip().add(new TranslatableComponent("cartoonishweapons.firecharge.warn").withStyle(ChatFormatting.RED));
+            event.getToolTip().add(Component.translatable("cartoonishweapons.firecharge.tooltip").withStyle(ChatFormatting.BLUE));
+            event.getToolTip().add(Component.translatable("cartoonishweapons.firecharge.warn").withStyle(ChatFormatting.RED));
         }
 
     }

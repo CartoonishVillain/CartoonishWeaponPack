@@ -3,7 +3,6 @@ package com.cartoonishvillain.cartoonishweaponpack.items;
 import com.cartoonishvillain.cartoonishweaponpack.CartoonishWeaponPack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -58,6 +57,6 @@ public class SeaTreaderBoard extends Item {
     @Override
     public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_) {
         super.appendHoverText(p_77624_1_, p_77624_2_, p_77624_3_, p_77624_4_);
-        p_77624_3_.add(new TranslatableComponent("cartoonishweapons.seatread.tooltip").withStyle(ChatFormatting.BLUE));
+        p_77624_3_.add(Component.translatable("cartoonishweapons.seatread.tooltip").withStyle(ChatFormatting.BLUE));
     }
 }

@@ -35,10 +35,10 @@ public class SeaTreaderBoard extends Item {
         return true;
     }
 
-    @Override
-    public int getItemStackLimit(ItemStack stack) {
-        return 1;
-    }
+//    @Override
+//    public int getItemStackLimit(ItemStack stack) {
+//        return 1;
+//    }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level p_77659_1_, Player p_77659_2_, InteractionHand p_77659_3_) {

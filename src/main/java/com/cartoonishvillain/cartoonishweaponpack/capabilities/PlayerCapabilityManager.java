@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
 
 public class PlayerCapabilityManager implements  IPlayerCapability, ICapabilityProvider, INBTSerializable<CompoundTag> {
     protected float cooldownValue = 0;
+    protected short reverseCardEffect = 0;
+    protected int reverseCardCooldown = 0;
     public final LazyOptional<IPlayerCapability> holder = LazyOptional.of(() -> this);
     @Override
     public float getCooldownValue() {
@@ -21,6 +23,26 @@ public class PlayerCapabilityManager implements  IPlayerCapability, ICapabilityP
     @Override
     public void setCooldownValue(float value) {
         cooldownValue = value;
+    }
+
+    @Override
+    public short getCardEffectTicks() {
+        return reverseCardEffect;
+    }
+
+    @Override
+    public void setCardEffectTicks(short value) {
+        reverseCardEffect = value;
+    }
+
+    @Override
+    public int getCardCooldownTicks() {
+        return reverseCardCooldown;
+    }
+
+    @Override
+    public void setCardCooldownTicks(int value) {
+        reverseCardCooldown = value;
     }
 
     @Nonnull

@@ -2,12 +2,12 @@ package com.cartoonishvillain.cartoonishweaponpack.entities;
 
 import com.cartoonishvillain.cartoonishweaponpack.Register;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,7 +39,7 @@ public class ThrownDynamite extends ThrowableItemProjectile {
     protected void onHit(HitResult p_70227_1_) {
         super.onHit(p_70227_1_);
         if(!this.level.isClientSide()) {
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.BlockInteraction.BREAK);
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Level.ExplosionInteraction.BLOCK);
         }
         this.remove(RemovalReason.DISCARDED);
     }
@@ -50,7 +50,7 @@ public class ThrownDynamite extends ThrowableItemProjectile {
         ticksAlive--;
         if(ticksAlive < 0){
             if(!this.level.isClientSide()){
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.BlockInteraction.BREAK);}
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Level.ExplosionInteraction.BLOCK);}
             this.remove(RemovalReason.DISCARDED);
         }
     }
@@ -61,7 +61,7 @@ public class ThrownDynamite extends ThrowableItemProjectile {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

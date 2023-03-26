@@ -34,21 +34,21 @@ public class BoxingGlove extends DiggerItem {
         attacker.getCapability(PlayerCapability.INSTANCE).ifPresent(h->{
             theSwing.set(h.getCooldownValue());
         });
-        if(attacker.getItemInHand(InteractionHand.OFF_HAND).getItem().equals(Register.BOXINGGLOVES.get()) && attacker instanceof Player && theSwing.get() == 1.0f && !attacker.level.isClientSide()){
-            int chance = attacker.getRandom().nextInt(6);
-            if(chance == 1){
-                Vec3 direction = attacker.getPosition(0).subtract(target.getPosition(0));
-                direction = direction.normalize();
-                target.knockback(2.5f, direction.x, direction.z);
-                CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "boxing"));
-            }else if (chance == 2){
-                Vec3 direction = attacker.getPosition(0).subtract(target.getPosition(0));
-                direction = direction.normalize();
-                target.knockback(2f, direction.x, direction.z);
-                CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "boxing"));
-            }
-
-        }
+//        if(attacker.getItemInHand(InteractionHand.OFF_HAND).getItem().equals(Register.BOXINGGLOVES.get()) && attacker instanceof Player && theSwing.get() == 1.0f && !attacker.level.isClientSide()){
+//            int chance = attacker.getRandom().nextInt(6);
+//            if(chance == 1){
+//                Vec3 direction = attacker.getPosition(0).subtract(target.getPosition(0));
+//                direction = direction.normalize();
+//                target.knockback(2.5f, direction.x, direction.z);
+//                CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "boxing"));
+//            }else if (chance == 2){
+//                Vec3 direction = attacker.getPosition(0).subtract(target.getPosition(0));
+//                direction = direction.normalize();
+//                target.knockback(2f, direction.x, direction.z);
+//                CartoonishWeaponPack.giveAdvancement((ServerPlayer) attacker, attacker.getServer(), new ResourceLocation(CartoonishWeaponPack.MOD_ID, "boxing"));
+//            }
+//
+//        }
         return super.hurtEnemy(stack, target, attacker);
     }
 

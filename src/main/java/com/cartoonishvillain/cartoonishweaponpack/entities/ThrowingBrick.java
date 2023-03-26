@@ -1,8 +1,8 @@
 package com.cartoonishvillain.cartoonishweaponpack.entities;
 
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -42,7 +42,7 @@ public class ThrowingBrick extends ThrowableItemProjectile {
             LivingEntity livingEntity = (LivingEntity) p_213868_1_.getEntity();
             int armor = livingEntity.getArmorValue();
             float damage = 2 + (0.1f * armor);
-            livingEntity.hurt(DamageSource.GENERIC, damage);
+            livingEntity.hurt(this.damageSources().generic(), damage);
         }
     }
 
@@ -70,7 +70,7 @@ public class ThrowingBrick extends ThrowableItemProjectile {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

@@ -1,5 +1,7 @@
 package com.cartoonishvillain.cartoonishweaponpack;
 
+import com.cartoonishvillain.cartoonishweaponpack.config.CommonConfig;
+import com.cartoonishvillain.cartoonishweaponpack.config.ConfigHelper;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.resources.ResourceLocation;
@@ -7,6 +9,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -23,8 +26,11 @@ public class CartoonishWeaponPack
     public static final String MOD_ID = "cartoonishweapons";
     public static final Logger LOGGER = LogManager.getLogger();
 
+    public static CommonConfig config;
+
     public CartoonishWeaponPack() {
         Register.init();
+        config = ConfigHelper.register(ModConfig.Type.COMMON, CommonConfig::new);
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading

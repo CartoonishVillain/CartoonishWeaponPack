@@ -11,7 +11,7 @@
   "cartoonishweapons.chicken.tooltip": "Chance to inflict hunger on players based on how hungry they are. For all other entities knockback is increased.",
   "cartoonishweapons.seatread.tooltip": "Chance to block incoming damage. Right click to apply a short Dolphin's Grace effect.",
   "item.cartoonishweapons.reversecard": "Reverse Card",
-  "item.cartoonishweapons.reversecard.tooltip": "Play this card to reflect or negate damage for 5 seconds. Has a 1 minute cooldown.",
+  "cartoonishweapons.reversecard.tooltip": "Play this card to reflect or negate damage for 5 seconds. Has a 1 minute cooldown.",
   "item.cartoonishweapons.reversecard.timer": "Reverse card on cooldown! Cooldown time remaining: %1$s",
   "item.cartoonishweapons.comicallylargespoon": "Comically Large Spoon",
   "item.cartoonishweapons.seatreaderboard": "Sea Treader Board",
